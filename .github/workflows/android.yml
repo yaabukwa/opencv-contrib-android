@@ -21,16 +21,16 @@ jobs:
 #           ndk-version: r25b
 #           add-to-path: false
 
-      - name: Install tools
-        run: |
-          sudo apt-get update 2>&1 > /dev/null
-          sudo apt-get install -y ninja-build
+#       - name: Install tools
+#         run: |
+#           sudo apt-get update 2>&1 > /dev/null
+#           sudo apt-get install -y ninja-build
 
       - name: Tools report
         run: |
          type gcc ninja curl grep sed tr cmake git python3 2>&1
          gcc --version
-         ninja --version
+#         ninja --version
          python3 --version
          cmake --version
          echo ANDROID_HOME is ${ANDROID_HOME}
@@ -79,7 +79,7 @@ jobs:
         run: |
           #ls -l ${ANDROID_NDK_HOME}
           mkdir -p arm64-v8a && cd arm64-v8a
-          cmake -GNinja -DCMAKE_BUILD_TYPE=Release \
+          cmake -DCMAKE_BUILD_TYPE=Release \
             -D CMAKE_CXX_FLAGS="-O3" -D CMAKE_C_FLAGS="-O3" \
             -DGRADLE_VERSION:STRING=7.5 \
             -DANDROID_GRADLE_PLUGIN_VERSION=7.2.0 \
@@ -108,7 +108,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=${{ runner.workspace }}/${PACKAGE_NAME} \
             -DENABLE_LTO=ON ../opencv-${OCV_VER}
             
-            cmake --build .
+            cmake --build . -j
             cmake --build . --target install
 
 
