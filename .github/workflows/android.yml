@@ -79,7 +79,7 @@ jobs:
         run: |
           #ls -l ${ANDROID_NDK_HOME}
           mkdir -p arm64-v8a && cd arm64-v8a
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
+          cmake -G ninja -DCMAKE_BUILD_TYPE=Release \
             -D CMAKE_CXX_FLAGS="-O3" -D CMAKE_C_FLAGS="-O3" \
             -DGRADLE_VERSION:STRING=7.5 \
             -DANDROID_GRADLE_PLUGIN_VERSION=7.2.0 \
