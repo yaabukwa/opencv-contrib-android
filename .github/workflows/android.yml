@@ -52,7 +52,6 @@ jobs:
          python3 --version
          cmake --version
          echo ANDROID_HOME is ${ANDROID_HOME}
-         # echo ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
          echo Building OpenCV version: ${OCV_VER}
          echo Expected package name: ${{ env.PACKAGE_NAME }}.zip
 
