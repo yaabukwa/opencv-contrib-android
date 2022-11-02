@@ -11,15 +11,27 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OCV_VER: 4.6.0
-
+      PACKAGE_NAME: opencv-4.6.0-android
+      
     steps:
+    
+      - uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r25b
+          add-to-path: false
+
       - name: Tools report
         run: |
-         type curl grep sed tr cmake git python3 2>&1
+         type gcc ninja curl grep sed tr cmake git python3 2>&1
          gcc --version
+         ninja --version
          python3 --version
          cmake --version
          echo ANDROID_HOME is ${ANDROID_HOME}
+         echo ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+         echo Building OpenCV version: ${OCV_VER}
+         echo Expected package name: ${PACKAGE_NAME}.zip
 
       - uses: actions/checkout@v3
       
@@ -56,7 +68,7 @@ jobs:
           tar xf ./cache/opencv_contrib-${OCV_VER}.tar.gz
           ls -l
 
-      - name: Build OpenCV / OpenCV-Contrib
+      - name: Build OpenCV / OpenCV-Contrib arm64-v8a
         run: |
           echo TODO
 
