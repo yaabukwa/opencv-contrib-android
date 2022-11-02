@@ -77,65 +77,45 @@ jobs:
           tar xf ./cache/opencv_contrib-${OCV_VER}.tar.gz
           ls -l
 
+      - name: Prepare Common CMake Build Options
+        run: |
+          cat cmake_options.txt > build_options.txt
+          cat <<EOF >> build_options.txt
+          -DCMAKE_TOOLCHAIN_FILE=${ANDROID_HOME}/ndk/${NDK_VER}/build/cmake/android.toolchain.cmake
+          -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-${OCV_VER}/modules
+          -DPYTHON_DEFAULT_EXECUTABLE=$(which python3)
+          -DCMAKE_INSTALL_PREFIX=${{ runner.workspace }}/output
+          EOF
+          echo *** Final Common CMake Build Options ***
+          cat build_options.txt
+          
       - name: Build OpenCV / OpenCV-Contrib arm64-v8a
         run: |
           mkdir -p arm64-v8a && cd arm64-v8a
-          cmake -GNinja
-            -DCMAKE_TOOLCHAIN_FILE=${ANDROID_HOME}/ndk/${NDK_VER}/build/cmake/android.toolchain.cmake \
-            -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-${OCV_VER}/modules \
-            -DANDROID_ABI=arm64-v8a \
-            -DPYTHON_DEFAULT_EXECUTABLE=$(which python3)
-            $(cat ../../cmake_options.txt) \
-            -DCMAKE_INSTALL_PREFIX=${{ runner.workspace }}/output \
-            ../opencv-${OCV_VER}
-            
-            cmake --build . -j
-            cmake --build . --target install
+          cmake -GNinja -DANDROID_ABI=arm64-v8a $(cat ../build_options.txt) ../opencv-${OCV_VER}
+          cmake --build . -j
+          cmake --build . --target install
 
       - name: Build OpenCV / OpenCV-Contrib armeabi-v7a
         run: |
           mkdir -p armeabi-v7a && cd armeabi-v7a
-          cmake -GNinja
-            -DCMAKE_TOOLCHAIN_FILE=${ANDROID_HOME}/ndk/${NDK_VER}/build/cmake/android.toolchain.cmake \
-            -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-${OCV_VER}/modules \
-            -DANDROID_ABI=armeabi-v7a \
-            -DPYTHON_DEFAULT_EXECUTABLE=$(which python3)
-            $(cat ../../cmake_options.txt) \
-            -DCMAKE_INSTALL_PREFIX=${{ runner.workspace }}/output \
-            ../opencv-${OCV_VER}
-            
-            cmake --build . -j
-            cmake --build . --target install
+          cmake -GNinja -DANDROID_ABI=armeabi-v7a $(cat ../build_options.txt) ../opencv-${OCV_VER}
+          cmake --build . -j
+          cmake --build . --target install
 
       - name: Build OpenCV / OpenCV-Contrib x86
         run: |
           mkdir -p x86 && cd x86
-          cmake -GNinja
-            -DCMAKE_TOOLCHAIN_FILE=${ANDROID_HOME}/ndk/${NDK_VER}/build/cmake/android.toolchain.cmake \
-            -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-${OCV_VER}/modules \
-            -DANDROID_ABI=x86 \
-            -DPYTHON_DEFAULT_EXECUTABLE=$(which python3)
-            $(cat ../../cmake_options.txt) \
-            -DCMAKE_INSTALL_PREFIX=${{ runner.workspace }}/output \
-            ../opencv-${OCV_VER}
-            
-            cmake --build . -j
-            cmake --build . --target install
+          cmake -GNinja -DANDROID_ABI=x86 $(cat ../build_options.txt) ../opencv-${OCV_VER}
+          cmake --build . -j
+          cmake --build . --target install
 
       - name: Build OpenCV / OpenCV-Contrib x86_64
         run: |
           mkdir -p x86_64 && cd x86_64
-          cmake -GNinja
-            -DCMAKE_TOOLCHAIN_FILE=${ANDROID_HOME}/ndk/${NDK_VER}/build/cmake/android.toolchain.cmake \
-            -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-${OCV_VER}/modules \
-            -DANDROID_ABI=x86_64 \
-            -DPYTHON_DEFAULT_EXECUTABLE=$(which python3)
-            $(cat ../../cmake_options.txt) \
-            -DCMAKE_INSTALL_PREFIX=${{ runner.workspace }}/output \
-            ../opencv-${OCV_VER}
-            
-            cmake --build . -j
-            cmake --build . --target install
+          cmake -GNinja -DANDROID_ABI=x86_64 $(cat ../build_options.txt) ../opencv-${OCV_VER}
+          cmake --build . -j
+          cmake --build . --target install
 
       - name: Zip Output
         run: |
