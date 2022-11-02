@@ -86,7 +86,7 @@ jobs:
       - name: Prepare Common CMake Build Options
         run: |
           cat cmake_options.txt > build_options.txt
-          cat <<EOF >> build_options.txt
+          cat <<EOF>>build_options.txt
           -DCMAKE_TOOLCHAIN_FILE=${ANDROID_HOME}/ndk/${NDK_VER}/build/cmake/android.toolchain.cmake
           -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-${OCV_VER}/modules
           -DPYTHON_DEFAULT_EXECUTABLE=$(which python3)
