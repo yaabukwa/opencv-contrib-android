@@ -30,7 +30,7 @@ jobs:
         run: |
          type gcc ninja curl grep sed tr cmake git python3 2>&1
          gcc --version
-         #ninja --version
+         # ninja --version
          python3 --version
          cmake --version
          echo ANDROID_HOME is ${ANDROID_HOME}
