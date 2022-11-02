@@ -12,6 +12,7 @@ jobs:
     env:
       OCV_VER: 4.6.0
       PACKAGE_NAME: opencv-4.6.0-android
+      NDK_VER: 25.1.8937393
       
     steps:
     
@@ -25,6 +26,23 @@ jobs:
 #         run: |
 #           sudo apt-get update 2>&1 > /dev/null
 #           sudo apt-get install -y ninja-build
+
+      - name: Prepare NDK dir for caching
+        run: |
+          sudo mkdir -p ${ANDROID_HOME}/ndk
+          sudo chmod -R 777 ${ANDROID_HOME}/ndk
+          sudo chown -R $USER:$USER ${ANDROID_HOME}/ndk
+
+      - name: NDK Cache
+        id: ndk-cache
+        uses: actions/cache@v2
+        with:
+          path: ${ANDROID_HOME}/ndk
+          key: ndk-cache-${NDK_VER}-v1
+
+      - name: Install NDK
+        if: steps.ndk-cache.outputs.cache-hit != 'true'
+        run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;${NDK_VER}"
 
       - name: Tools report
         run: |
@@ -73,57 +91,4 @@ jobs:
           tar xf ./cache/opencv_contrib-${OCV_VER}.tar.gz
           ls -l
 
-      - name: Build OpenCV / OpenCV-Contrib arm64-v8a
-#         env:
-#           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-        run: |
-          #ls -l ${ANDROID_NDK_HOME}
-          mkdir -p arm64-v8a && cd arm64-v8a
-          cmake -DCMAKE_BUILD_TYPE=Release \
-            -D CMAKE_CXX_FLAGS="-O3" -D CMAKE_C_FLAGS="-O3" \
-            -DGRADLE_VERSION:STRING=7.5 \
-            -DANDROID_GRADLE_PLUGIN_VERSION=7.2.0 \
-            -DCMAKE_TOOLCHAIN_FILE=$ANDROID_HOME/ndk-bundle/build/cmake/android.toolchain.cmake \
-            -DANDROID_TOOLCHAIN=clang++ \
-            -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-${OCV_VER}/modules \
-            -DANDROID_ABI=arm64-v8a \
-            -DPYTHON_DEFAULT_EXECUTABLE=$(which python3) \
-            -DANDROID_NATIVE_API_LEVEL=26 \
-            -DBUILD_LIST=core,improc,aruco,calib3d,imgcodecs,java \
-            -DBUILD_ANDROID_EXAMPLES=OFF \
-            -DWITH_ITT=OFF \
-            -DBUILD_PERF_TESTS=OFF \
-            -DBUILD_TESTS=OFF \
-            -DBUILD_FAT_JAVA_LIB=ON \
-            -DWITH_OPENJPEG=OFF \
-            -DWITH_OPENEXR=OFF \
-            -DWITH_JASPER=OFF \
-            -DWITH_JPEG=OFF \
-            -Dpackbits=OFF \
-            -DWITH_PROTOBUF=OFF \
-            -Dmdi=OFF \
-            -DOPENCV_DISABLE_FILESYSTEM_SUPPORT=ON \
-            -DENABLE_NEON=ON \
-            -DANDROID_ARM_NEON=ON \
-            -DCMAKE_INSTALL_PREFIX=${{ runner.workspace }}/${PACKAGE_NAME} \
-            -DENABLE_LTO=ON ../opencv-${OCV_VER}
-            
-            cmake --build . -j
-            cmake --build . --target install
 
-
-      - name: Zip Output
-        run: |
-          cd ./opencv-build 
-          find .
-          zip -r opencv_contrib-${OCV_VER}-android.zip TODO-artifacts
-          ls -l
-          du -sh opencv_contrib-${OCV_VER}-android.zip
-
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.0
-        with:        
-          retention-days: 90
-          if-no-files-found: error
-          path:
-            opencv-build/opencv_contrib-*.zip
