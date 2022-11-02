@@ -28,7 +28,7 @@ jobs:
 
       - name: NDK Cache
         id: ndk-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${ANDROID_HOME}/ndk
           key: ndk-cache-${NDK_VER}-v1
