@@ -24,7 +24,7 @@ jobs:
       - name: Install tools
         run: |
           sudo apt-get update 2>&1 > /dev/null
-          sudo apt-get install -y ninja gcc ninja curl grep sed tr cmake git python3
+          sudo apt-get install -y ninja-build
 
       - name: Tools report
         run: |
