@@ -16,6 +16,10 @@ jobs:
       - name: Tools report
         run: |
          type curl grep sed tr cmake git python3 2>&1
+         gcc --version
+         python3 --version
+         cmake --version
+         echo ANDROID_HOME is ${ANDROID_HOME}
 
       - uses: actions/checkout@v3
       
