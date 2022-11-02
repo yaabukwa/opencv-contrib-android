@@ -28,7 +28,7 @@ jobs:
 
       - name: Tools report
         run: |
-         type gcc ninja curl grep sed tr cmake git python3 2>&1
+         type gcc ninja curl grep sed tr cmake git python3 2>&1 || true
          gcc --version
          # ninja --version
          python3 --version
