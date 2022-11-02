@@ -1,0 +1,72 @@
+name: Build OpenCV-contrib for Android
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      OCV_VER: 4.6.0
+
+    steps:
+      - name: Tools report
+        run: |
+         type curl grep sed tr cmake git python3 2>&1
+
+      - uses: actions/checkout@v3
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Prepare Cache Key
+        run: |
+          echo "https://github.com/opencv/opencv/archive/refs/tags/${OCV_VER}.tar.gz" >> cache_key.txt
+          echo "https://github.com/opencv/opencv_contrib/archive/refs/tags/${OCV_VER}.tar.gz" >> cache_key.txt
+          
+      - name: Cache Downloads
+        id: cache-downloads
+        uses: actions/cache@v3
+        with:
+            path: |
+              ./cache/
+            key: ${{ hashFiles('cache_key.txt') }}
+
+      - name: Download if Needed
+        if: steps.cache-downloads.outputs.cache-hit != 'true'
+        run: |
+            mkdir -p ./cache
+            curl -o ./cache/opencv-${OCV_VER}.tar.gz -L "https://github.com/opencv/opencv/archive/refs/tags/${OCV_VER}.tar.gz"
+            curl -o ./cache/opencv_contrib-${OCV_VER}.tar.gz -L "https://github.com/opencv/opencv_contrib/archive/refs/tags/${OCV_VER}.tar.gz"
+
+      - name: Extract OpenCV & OpenCV Contrib
+        run: |
+          tar xf ./cache/opencv-${OCV_VER}.tar.gz
+          tar xf ./cache/opencv_contrib-${OCV_VER}.tar.gz
+          ls -l
+
+      - name: Build OpenCV / OpenCV-Contrib
+        run: |
+          echo TODO
+
+      - name: Zip Output
+        run: |
+          cd ./opencv-build 
+          find .
+          zip -r opencv_contrib-${OCV_VER}-android.zip TODO-artifacts
+          ls -l
+          du -sh opencv_contrib-${OCV_VER}-android.zip
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:        
+          retention-days: 90
+          if-no-files-found: error
+          path:
+            opencv-build/opencv_contrib-*.zip
