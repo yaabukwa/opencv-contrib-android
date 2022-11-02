@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       OCV_VER: 4.6.0
       PACKAGE_NAME: opencv-4.6.0-android
