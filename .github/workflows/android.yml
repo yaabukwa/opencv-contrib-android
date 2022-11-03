@@ -92,7 +92,7 @@ jobs:
           -DPYTHON_DEFAULT_EXECUTABLE=$(which python3)          
           EOF
           # ${{ runner.workspace }}/
-          echo *** Final Common CMake Build Options ***
+          echo "Final Common CMake Build Options:"
           cat build_options.txt
           
       - name: Build OpenCV / OpenCV-Contrib arm64-v8a
