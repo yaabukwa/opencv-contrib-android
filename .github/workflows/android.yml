@@ -86,15 +86,16 @@ jobs:
       - name: Build OpenCV / OpenCV-Contrib
         run: |
           python3 opencv-${OCV_VER}/platforms/android/build_sdk.py --help
-          mkdir build && cd build
-          python3 ../opencv-${OCV_VER}/platforms/android/build_sdk.py \
+          mkdir output
+          python3 opencv-${OCV_VER}/platforms/android/build_sdk.py \
                   --sdk_path ${ANDROID_HOME} \
                   --ndk_path ${ANDROID_HOME}/ndk/${NDK_VER} \
                   --use_android_buildtools \
                   --extra_modules_path opencv_contrib-${OCV_VER} \
                   --modules_list core,improc,aruco,calib3d,imgcodecs,java \
                   --no_samples_build \
-                  --no_kotlin
+                  --no_kotlin \
+                  workdir opencv-${OCV_VER}
 
       - name: Prepare Common CMake Build Options
         run: |
