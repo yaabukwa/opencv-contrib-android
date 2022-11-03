@@ -102,15 +102,18 @@ jobs:
                   --no_kotlin \
                   workdir $PWD/opencv-${OCV_VER}
 
+      - name: Zip SDK
+        run: |
+          zip -9 -r ${{ env.PACKAGE_NAME }}.zip workdir/OpenCV-android-sdk
+
       - name: Build AAR
         run: |
+          pushd .
           cd workdir/OpenCV-android-sdk/samples
           ./gradlew opencv:assembleRelease
           ./gradlew opencv:bundleReleaseAar
-          
-      - name: Zip Output
-        run: |
-          zip -9 -r ${{ env.PACKAGE_NAME }}.zip workdir/OpenCV-android-sdk
+          popd
+          cp -rf workdir/OpenCV-android-sdk/sdk/build/outputs/aar/opencv-release.aar ./opencv_${OCV_VER}_release.aar
 
 #       - name: Prepare Common CMake Build Options
 #         run: |
@@ -164,10 +167,18 @@ jobs:
 #           rm -f ${{ env.PACKAGE_NAME }}/sdk/native/jni/android.toolchain.cmake
 #           zip -9 -r ${{ env.PACKAGE_NAME }}.zip ${{ env.PACKAGE_NAME }}
 
-      - name: Upload Artifact
+      - name: Upload SDK Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
           retention-days: 90
           if-no-files-found: error
           name: ${{ env.PACKAGE_NAME }}
           path: ${{ env.PACKAGE_NAME }}.zip
+
+      - name: Upload AAR Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          retention-days: 90
+          if-no-files-found: error
+          name: opencv_${OCV_VER}_release.aar
+          path: opencv_${OCV_VER}_release.aar
