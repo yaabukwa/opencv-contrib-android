@@ -23,7 +23,7 @@ jobs:
       - name: Install tools
         run: |
           sudo apt-get update 2>&1 > /dev/null
-          sudo apt-get install -y build-essential ninja-build  2>&1 > /dev/null
+          sudo apt-get install -y build-essential ninja-build ccache 2>&1 > /dev/null
           echo "Done"
 
       - name: Prepare NDK dir for caching
@@ -93,6 +93,7 @@ jobs:
           python3 opencv-${OCV_VER}/platforms/android/build_sdk.py \
                   --sdk_path ${ANDROID_HOME} \
                   --ndk_path ${ANDROID_HOME}/ndk/${NDK_VER} \
+                  --config ndk-22.config.py \
                   --use_android_buildtools \
                   --extra_modules_path $PWD/opencv_contrib-${OCV_VER} \
                   --modules_list core,improc,aruco,calib3d,imgcodecs,java \
