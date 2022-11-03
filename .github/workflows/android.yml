@@ -93,7 +93,6 @@ jobs:
           python3 opencv-${OCV_VER}/platforms/android/build_sdk.py \
                   --sdk_path ${ANDROID_HOME} \
                   --ndk_path ${ANDROID_HOME}/ndk/${NDK_VER} \
-                  --config ndk-22.config.py \
                   --use_android_buildtools \
                   --extra_modules_path $PWD/opencv_contrib-${OCV_VER}/modules \
                   --modules_list core,improc,aruco,calib3d,imgcodecs,java \
