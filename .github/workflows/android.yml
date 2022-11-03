@@ -19,7 +19,6 @@ jobs:
         with:
           distribution: 'adopt-hotspot'
           java-version: '17'
-          cache: 'gradle'
 
       - name: Install tools
         run: |
