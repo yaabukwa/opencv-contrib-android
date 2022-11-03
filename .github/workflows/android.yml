@@ -102,6 +102,12 @@ jobs:
                   --no_kotlin \
                   workdir $PWD/opencv-${OCV_VER}
 
+      - name: Build AAR
+        run: |
+          cd workdir/OpenCV-android-sdk/samples
+          ./gradlew opencv:assembleRelease
+          ./gradlew opencv:bundleReleaseAar
+          
       - name: Zip Output
         run: |
           zip -9 -r ${{ env.PACKAGE_NAME }}.zip workdir/OpenCV-android-sdk
