@@ -84,6 +84,7 @@ jobs:
           ls -l
 
       - name: Build OpenCV / OpenCV-Contrib
+        run: |
           python3 opencv-${OCV_VER}/platforms/android/build_sdk.py --help
           mkdir build && cd build
           python3 opencv-${OCV_VER}/platforms/android/build_sdk.py \
