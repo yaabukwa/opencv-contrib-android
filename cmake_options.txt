@@ -5,7 +5,7 @@
 -DANDROID_GRADLE_PLUGIN_VERSION=7.2.0
 -DANDROID_TOOLCHAIN=clang++
 -DANDROID_NATIVE_API_LEVEL=26
--DBUILD_LIST=core,improc,aruco,calib3d,imgcodecs,java,java_bindings_gen
+-DBUILD_LIST=core,improc,aruco,calib3d,imgcodecs,java,java_bindings_generator
 -Dpackbits=OFF
 -Dmdi=OFF
 -DOPENCV_DISABLE_FILESYSTEM_SUPPORT=ON
