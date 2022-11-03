@@ -87,7 +87,7 @@ jobs:
         run: |
           python3 opencv-${OCV_VER}/platforms/android/build_sdk.py --help
           mkdir build && cd build
-          python3 opencv-${OCV_VER}/platforms/android/build_sdk.py \
+          python3 ../opencv-${OCV_VER}/platforms/android/build_sdk.py \
                   --ndk_path ${ANDROID_HOME}/ndk/${NDK_VER} \
                   --use_android_buildtools \
                   --extra_modules_path opencv_contrib-${OCV_VER} \
