@@ -81,3 +81,4 @@
 -DBUILD_opencv_ts=OFF
 -DBUILD_opencv_python2=OFF
 -DBUILD_opencv_python3=OFF
+-DBUILD_opencv_java_bindings_generator=ON
