@@ -72,3 +72,10 @@
 -DBUILD_OBJC=OFF
 -DENABLE_PRECOMPILED_HEADERS=OFF
 -DCV_TRACE=OFF
+-DBUILD_opencv_gapi=OFF
+-DBUILD_opencv_objc=OFF
+-DBUILD_opencv_js=OFF
+-DBUILD_opencv_ts=OFF
+-DBUILD_opencv_python2=OFF
+-DBUILD_opencv_python3=OFF
+
