@@ -83,6 +83,17 @@ jobs:
           tar xf ./cache/opencv_contrib-${OCV_VER}.tar.gz
           ls -l
 
+      - name: Build OpenCV / OpenCV-Contrib
+          python3 opencv-${OCV_VER}/platforms/android/build_sdk.py --help
+          mkdir build && cd build
+          python3 opencv-${OCV_VER}/platforms/android/build_sdk.py \
+                  --ndk_path ${ANDROID_HOME}/ndk/${NDK_VER} \
+                  --use_android_buildtools \
+                  --extra_modules_path opencv_contrib-${OCV_VER} \
+                  --modules_list core,improc,aruco,calib3d,imgcodecs,java \
+                  --no_samples_build \
+                  --no_kotlin
+
       - name: Prepare Common CMake Build Options
         run: |
           cat cmake_options.txt > build_options.txt
