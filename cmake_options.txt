@@ -5,7 +5,7 @@
 -DANDROID_GRADLE_PLUGIN_VERSION=7.2.0
 -DANDROID_TOOLCHAIN=clang++
 -DANDROID_NATIVE_API_LEVEL=26
--DBUILD_LIST=core,improc,aruco,calib3d,imgcodecs,java
+-DBUILD_LIST=core,improc,aruco,calib3d,imgcodecs,java,java_bindings_gen
 -Dpackbits=OFF
 -Dmdi=OFF
 -DOPENCV_DISABLE_FILESYSTEM_SUPPORT=ON
@@ -73,12 +73,11 @@
 -DENABLE_PRECOMPILED_HEADERS=OFF
 -DCV_TRACE=OFF
 -DBUILD_ANDROID_PROJECTS=OFF
+-DBUILD_ANDROID_EXAMPLES=OFF
+-DBUILD_ANDROID_SERVICE=OFF
 -DBUILD_opencv_gapi=OFF
 -DBUILD_opencv_objc=OFF
 -DBUILD_opencv_js=OFF
 -DBUILD_opencv_ts=OFF
 -DBUILD_opencv_python2=OFF
 -DBUILD_opencv_python3=OFF
--DBUILD_JAVA=ON
--DBUILD_opencv_java=ON
--DBUILD_opencv_java_bindings_gen=ON
