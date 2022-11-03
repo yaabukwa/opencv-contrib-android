@@ -59,6 +59,7 @@ jobs:
 
       - name: Prepare Cache Key
         run: |
+          pwd
           echo "https://github.com/opencv/opencv/archive/refs/tags/${OCV_VER}.tar.gz" >> cache_key.txt
           echo "https://github.com/opencv/opencv_contrib/archive/refs/tags/${OCV_VER}.tar.gz" >> cache_key.txt
           
@@ -79,7 +80,6 @@ jobs:
 
       - name: Extract OpenCV & OpenCV Contrib
         run: |
-          cd ${{ runner.workspace }}/
           tar xf ./cache/opencv-${OCV_VER}.tar.gz
           tar xf ./cache/opencv_contrib-${OCV_VER}.tar.gz
           ls -l
@@ -88,6 +88,8 @@ jobs:
         run: |
           python3 opencv-${OCV_VER}/platforms/android/build_sdk.py --help
           mkdir output
+          pwd
+          ls -l
           python3 opencv-${OCV_VER}/platforms/android/build_sdk.py \
                   --sdk_path ${ANDROID_HOME} \
                   --ndk_path ${ANDROID_HOME}/ndk/${NDK_VER} \
