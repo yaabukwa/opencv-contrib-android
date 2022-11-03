@@ -113,7 +113,7 @@ jobs:
           ./gradlew opencv:assembleRelease
           ./gradlew opencv:bundleReleaseAar
           popd
-          cp -rf workdir/OpenCV-android-sdk/sdk/build/outputs/aar/opencv-release.aar ./opencv_${OCV_VER}_release.aar
+          cp -rf workdir/OpenCV-android-sdk/sdk/build/outputs/aar/opencv-release.aar ./opencv-release.aar
 
 #       - name: Prepare Common CMake Build Options
 #         run: |
@@ -181,4 +181,4 @@ jobs:
           retention-days: 90
           if-no-files-found: error
           name: opencv_${OCV_VER}_release.aar
-          path: opencv_${OCV_VER}_release.aar
+          path: opencv-release.aar
