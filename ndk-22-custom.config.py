@@ -1,5 +1,7 @@
 COMMON_CMAKE_VAR = dict(
                 CMAKE_BUILD_TYPE='Release',
+                CMAKE_CONFIGURATION_TYPES='Release',
+                ANDROID_STL='c++_static'              
                 OPENCV_DISABLE_FILESYSTEM_SUPPORT='ON',
                 WITH_ITT='OFF',
                 BUILD_FAT_JAVA_LIB='ON',
