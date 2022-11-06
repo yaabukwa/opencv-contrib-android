@@ -1,4 +1,5 @@
 COMMON_CMAKE_VAR = dict(
+                CMAKE_BUILD_TYPE='Release',
                 OPENCV_DISABLE_FILESYSTEM_SUPPORT='ON',
                 WITH_ITT='OFF',
                 BUILD_FAT_JAVA_LIB='ON',
@@ -11,8 +12,8 @@ COMMON_CMAKE_VAR = dict(
                 mdi='OFF')
 
 ABIs = [
-    ABI("2", "armeabi-v7a", None, cmake_vars=dict(ENABLE_NEON='ON', ANDROID_ABI='armeabi-v7a with NEON', ANDROID_GRADLE_PLUGIN_VERSION='7.2.0', GRADLE_VERSION='7.5', KOTLIN_PLUGIN_VERSION='1.5.10')),
-    ABI("3", "arm64-v8a",   None, cmake_vars=dict(ENABLE_NEON='ON', ANDROID_GRADLE_PLUGIN_VERSION='7.2.0', GRADLE_VERSION='7.5', KOTLIN_PLUGIN_VERSION='1.5.10')),
+    ABI("2", "armeabi-v7a", None, cmake_vars=dict(ENABLE_NEON='ON', ANDROID_ABI='armeabi-v7a with NEON', ANDROID_GRADLE_PLUGIN_VERSION='7.2.0', GRADLE_VERSION='7.5', KOTLIN_PLUGIN_VERSION='1.5.10', CMAKE_CXX_FLAGS='-O3', CMAKE_C_FLAGS='-O3')),
+    ABI("3", "arm64-v8a",   None, cmake_vars=dict(ENABLE_NEON='ON', ANDROID_GRADLE_PLUGIN_VERSION='7.2.0', GRADLE_VERSION='7.5', KOTLIN_PLUGIN_VERSION='1.5.10', CMAKE_CXX_FLAGS='-O3', CMAKE_C_FLAGS='-O3')),
     ABI("5", "x86_64",      None, cmake_vars=dict(ANDROID_GRADLE_PLUGIN_VERSION='7.2.0', GRADLE_VERSION='7.5', KOTLIN_PLUGIN_VERSION='1.5.10')),
     ABI("4", "x86",         None, cmake_vars=dict(ANDROID_GRADLE_PLUGIN_VERSION='7.2.0', GRADLE_VERSION='7.5', KOTLIN_PLUGIN_VERSION='1.5.10')),
 ]
