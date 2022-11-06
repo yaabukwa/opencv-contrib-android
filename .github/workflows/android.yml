@@ -85,12 +85,13 @@ jobs:
           ls -l
 
       - name: Build OpenCV / OpenCV-Contrib
-        run: |
+        run: |          
           python3 opencv-${OCV_VER}/platforms/android/build_sdk.py --help
           mkdir output
           pwd
           ls -l
           cp ndk-22-custom.config.py opencv-${OCV_VER}/platforms/android
+          export VERBOSE=1
           python3 opencv-${OCV_VER}/platforms/android/build_sdk.py \
                   --sdk_path ${ANDROID_HOME} \
                   --ndk_path ${ANDROID_HOME}/ndk/${NDK_VER} \
